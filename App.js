@@ -36,6 +36,7 @@ export default function App() {
   const work = ()=> setWorking(true); 
   const onChangeText = (payload) => setText(payload);
   const saveTodos = async(toSave)=>{
+    // STORAGE_KEY를 AsyncStorage에 스트링 형식으로 저장을 시킨다.
     await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(toSave))
   }
   const loadToDos = async()=>{
@@ -49,10 +50,13 @@ export default function App() {
       return
     }
     const newTodos = {
+      // 기존에 있던 toDos를 불러와서 [Date.now()] : {text ,work : working }를 추가하는 작업
       ...toDos,
       [Date.now()] : {text ,work : working }
     };
+    // 추가된 newTodos를 ToDos로 만들어 줌
     setToDos(newTodos);
+    // 
     await saveTodos(newTodos)
     setText("");
   }
@@ -63,6 +67,7 @@ export default function App() {
         {text : "네",  
         onPress : ()=>{
           const newToDos = {...toDos}
+          // delete : 객체 삭제
           delete newToDos[key]
           setToDos(newToDos);
           saveTodos(newToDos);
@@ -99,6 +104,7 @@ export default function App() {
         // multiline
         // placeholderTextColor : placeholder 글자색을 바꿔줄수 있다.
         // placeholderTextColor="red"
+        // onSubmitEditing 전송버튼을 눌렀을때 실행되는 함수
         onSubmitEditing={addToDo}
         onChangeText={onChangeText}
         value={text}
