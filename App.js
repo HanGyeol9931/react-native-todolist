@@ -79,8 +79,13 @@ export default function App() {
     const s = await AsyncStorage.getItem(STORAGE_KEY3)
     const s2 = await AsyncStorage.getItem(STORAGE_KEY4)
     console.log("누구냐 넌 ?",JSON.parse(s));
-    setChangeChecked(JSON.parse(s))
-    setPlaceholderText(JSON.parse(s2))
+    if(s == null){
+      setChangeChecked(true)
+      return
+    }else{
+      setChangeChecked(JSON.parse(s))
+      setPlaceholderText(JSON.parse(s2))
+    }
   }
   const pencilChangeToDo = (key)=>{
     if(changeChecked){
